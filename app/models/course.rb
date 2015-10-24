@@ -1,5 +1,4 @@
 class Course < ActiveRecord::Base
-  self.primary_key = "id"
 
   # Associations
   belongs_to :university

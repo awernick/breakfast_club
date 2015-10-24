@@ -1,5 +1,5 @@
 class StudyGroupsController < ApplicationController
-  before_action :set_study_group, only: :show, :update. :destroy
+  before_action :set_study_group, only: [:show, :update, :destroy]
   
   def index
     @study_groups = StudyGroup.all
@@ -45,6 +45,6 @@ class StudyGroupsController < ApplicationController
   end
   
   def study_group_params
-    params.require(:study_group).permit(:name, :course_id, :description, :professor_id. :active, :latitude, :longitude)
+    params.require(:study_group).permit(:name, :course_id, :description, :active, :latitude, :longitude)
   end
 end

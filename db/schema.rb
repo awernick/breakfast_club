@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151024115110) do
+ActiveRecord::Schema.define(version: 20151024131856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,16 +45,14 @@ ActiveRecord::Schema.define(version: 20151024115110) do
     t.integer  "study_group_id"
   end
 
-  create_table "courses", id: false, force: :cascade do |t|
-    t.string   "id"
+  create_table "courses", force: :cascade do |t|
+    t.string   "name"
+    t.string   "uid"
     t.integer  "university_id"
+    t.integer  "professor_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.string   "name"
-    t.integer  "professor_id"
   end
-
-  add_index "courses", ["professor_id"], name: "index_courses_on_professor_id", using: :btree
 
   create_table "professors", force: :cascade do |t|
     t.string   "name"
@@ -66,12 +64,11 @@ ActiveRecord::Schema.define(version: 20151024115110) do
     t.string   "name"
     t.string   "course_id"
     t.text     "description"
-    t.integer  "professor_id"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.boolean  "active"
-    t.decimal  "latitude",     precision: 10, scale: 6
-    t.decimal  "longitude",    precision: 10, scale: 6
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+    t.decimal  "latitude",    precision: 10, scale: 6
+    t.decimal  "longitude",   precision: 10, scale: 6
+    t.boolean  "active",                               default: true, null: false
   end
 
   create_table "universities", force: :cascade do |t|
@@ -96,6 +93,5 @@ ActiveRecord::Schema.define(version: 20151024115110) do
 
   add_index "users", ["university_id"], name: "index_users_on_university_id", using: :btree
 
-  add_foreign_key "courses", "professors"
   add_foreign_key "users", "universities"
 end

@@ -10,7 +10,7 @@ default: &default
   timeout: 5000
 
 elphnsql: &elphnsql
-  adapter: pg
+  adapter: postgresql
   database: bsecianj
   username: bsecianj
   password: <%= ENV['BFC_PASSWORD'] %>
