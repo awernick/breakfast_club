@@ -32,10 +32,10 @@ class StudyGroupsController < ApplicationController
    end
    
    def destroy
-      @study_group.destroy
-         respond_to do |format|
-         format.json { head :no_content }
-      end
+     @study_group.destroy
+      respond_to do |format|
+      format.json { head :no_content }
+     end
    end
 
   private
