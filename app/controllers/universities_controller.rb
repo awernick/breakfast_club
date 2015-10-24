@@ -34,7 +34,7 @@ class UniversitiesController < ApplicationController
    
    def destroy
       @university.destroy
-         respond_to do |format|
+      respond_to do |format|
          format.json { head :no_content }
       end
    end

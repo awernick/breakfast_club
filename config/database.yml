@@ -11,11 +11,11 @@ default: &default
 
 elphnsql: &elphnsql
   adapter: postgresql
-  database: bsecianj
-  username: bsecianj
+  database: upaxbkjm
+  username: upaxbkjm
   password: <%= ENV['BFC_PASSWORD'] %>
   url: <%= ENV['BFC_URL'] %>
-  host: jumbo.db.elephantsql.com
+  host: qdjjtnkv.db.elephantsql.com
 
 development:
   <<: *elphnsql
