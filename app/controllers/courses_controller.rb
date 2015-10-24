@@ -1,4 +1,5 @@
 class CoursesController < ApplicationController
+  before_action :authenticate_with_token!
   before_action :set_course, only: [:show, :update, :destroy]
   
   def index

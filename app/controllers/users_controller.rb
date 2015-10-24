@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_with_token! except: :create
   before_action :set_user, only: [:show, :update, :destroy]
   
   def index
@@ -22,7 +23,7 @@ class UsersController < ApplicationController
 
    def update
       respond_to do |format|
-         if @user.update(user_params)
+         if current_user.update(user_params)
             format.json { render :show, status: :ok, location: @user }
          else
             format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -32,7 +33,7 @@ class UsersController < ApplicationController
    end
    
    def destroy
-      @user.destroy
+      current_user.destroy
          respond_to do |format|
          format.json { head :no_content }
       end

@@ -1,4 +1,5 @@
 class ProfessorsController < ApplicationController
+  before_action :authenticate_with_token!
   before_action :set_professor, only: [:show, :update, :destroy]
   
   def index
