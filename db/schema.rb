@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151024105437) do
+ActiveRecord::Schema.define(version: 20151024115110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,21 +38,41 @@ ActiveRecord::Schema.define(version: 20151024105437) do
   enable_extension "pg_stat_statements"
   enable_extension "plv8"
 
+  create_table "attendances", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "study_group_id"
+  end
+
   create_table "courses", id: false, force: :cascade do |t|
     t.string   "id"
     t.integer  "university_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "name"
+    t.integer  "professor_id"
   end
+
+  add_index "courses", ["professor_id"], name: "index_courses_on_professor_id", using: :btree
 
   create_table "professors", force: :cascade do |t|
     t.string   "name"
-    t.integer  "university_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "professors", ["university_id"], name: "index_professors_on_university_id", using: :btree
+  create_table "study_groups", force: :cascade do |t|
+    t.string   "name"
+    t.string   "course_id"
+    t.text     "description"
+    t.integer  "professor_id"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "active"
+    t.decimal  "latitude",     precision: 10, scale: 6
+    t.decimal  "longitude",    precision: 10, scale: 6
+  end
 
   create_table "universities", force: :cascade do |t|
     t.string   "name"
@@ -67,15 +87,15 @@ ActiveRecord::Schema.define(version: 20151024105437) do
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "password"
     t.string   "email"
     t.integer  "university_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "password_digest"
   end
 
   add_index "users", ["university_id"], name: "index_users_on_university_id", using: :btree
 
-  add_foreign_key "professors", "universities"
+  add_foreign_key "courses", "professors"
   add_foreign_key "users", "universities"
 end
