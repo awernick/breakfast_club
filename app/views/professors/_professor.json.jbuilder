@@ -1,1 +1,1 @@
-json.extract! professor, :name
+json.extract! professor, :id, :name

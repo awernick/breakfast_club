@@ -2,7 +2,8 @@ class ProfessorsController < ApplicationController
   before_action :set_professor, only: [:show, :update, :destroy]
   
   def index
-    @professors = Professor.all
+    @university = University.find(params[:university_id]) unless params[:university_id].nil?
+    @professors = @university.nil? ? Professor.all : @university.professors
   end
 
   def show

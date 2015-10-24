@@ -1,8 +1,9 @@
 class StudyGroupsController < ApplicationController
-  before_action :set_study_group, only: [:show, :update, :destroy]
+  before_action :set_study_group, only: [:show, :update, :destroy, :join, :leave]
   
   def index
-    @study_groups = StudyGroup.all
+    @course = Course.find(params[:course_id]) unless params[:course_id].nil? 
+    @study_groups = @course.nil? ? StudyGroup.all : @course.study_groups
   end
 
   def show
@@ -28,7 +29,6 @@ class StudyGroupsController < ApplicationController
             format.json { render json: @study_group.errors, status: :unprocessable_entity }
          end
       end
-      
    end
    
    def destroy
@@ -37,6 +37,30 @@ class StudyGroupsController < ApplicationController
       format.json { head :no_content }
      end
    end
+
+  def join
+    @current_user = User.find(params[:user_id])
+    @attendance = Attendance.new(user_id: @current_user, study_group_id: @study_group )
+    respond_to do |format|
+      if @attendance.save
+        format.json { render json: {status: 'joined'}, status: :okay }
+      else
+        format.json { render json: @study_group.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+
+  def leave
+    @attendance = @study_group.attendances.find_by(user_id: params[:user_id])
+    respond_to do |format|
+      if @attendance.destroy
+        format.json { render json: {status: 'left'}, status: :okay }
+      else
+        format.json { render json: @attendance.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   private
 
