@@ -1,5 +1,5 @@
 class StudyGroupsController < ApplicationController
-  before_action :authenticate_with_token!
+#  before_action :authenticate_with_token!
   before_action :set_study_group, only: [:show, :update, :destroy, :join, :leave]
   
   def index

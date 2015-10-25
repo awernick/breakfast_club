@@ -1,5 +1,5 @@
 class UniversitiesController < ApplicationController
-  before_action :authenticate_with_token!, except: :index
+ # before_action :authenticate_with_token!, except: :index
   before_action :set_university, only: [:show, :update, :destroy]
   
   def index
