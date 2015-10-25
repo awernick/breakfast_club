@@ -1,1 +1,1 @@
-json.extract! university, :name, :street, :city, :state, :zip_code
+json.extract! university, :id, :name, :street, :city, :state, :zip_code
